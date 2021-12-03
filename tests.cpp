@@ -1,5 +1,5 @@
 #include <assert.h>
-#include "gausslib.h"
+#include "gausslib.hpp"
 #include <stdio.h>
 
 int test_v3() {
