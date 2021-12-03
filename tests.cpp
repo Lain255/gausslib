@@ -4,11 +4,11 @@
 
 int test_v3() {
     v3 a;
-    a.x = 0.0f;
+    a.x = 1.0f;
     a.y = 0.0f;
-    a.z = 2.0f;
+    a.z = 1.0f;
 
-    if(a.x == 0.0f && a.y == 0.0f && a.z == 2.0f) {
+    if(a.x == 1.0f && a.y == 0.0f && a.z == 1.0f) {
         return 0;
     } else {
         return 1;
