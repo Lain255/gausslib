@@ -9,4 +9,6 @@ typedef union v3 {
     };
 } v3;
 
+float v3_dot_v3(v3 l, v3 r); //dot product between two vectors
+
 #endif
