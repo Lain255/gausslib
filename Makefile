@@ -1,3 +1,3 @@
 test:
-	cc tests.c -o tests
+	c++ tests.cpp -o tests
 	./tests

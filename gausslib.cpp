@@ -1,6 +1,4 @@
-#include "gausslib.h"
-
-//its been a while :[
+#include "gausslib.hpp"
 
 float v3_dot_v3(v3 l, v3 r)
 {
