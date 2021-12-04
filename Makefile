@@ -1,3 +1,3 @@
 test:
-	c++ tests.cpp -o tests
+	c++ tests.cpp gausslib.cpp -o tests
 	./tests
