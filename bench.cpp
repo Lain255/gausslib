@@ -14,7 +14,15 @@ const float STEPLENGTH = (float) ((UPPERBOUND - LOWERBOUND)) / NUMSTEPS;
 
 float approxTan(float x)
 {
-    return HALFPI - HALFPI/(x+1);
+    const float a = -0.087;
+    const float b = -0.125;
+    const float c = 0.278;
+    const float l = 1.014;
+
+    if (x > l)
+        return HALFPI - x/(x*x+c);
+    else
+        return (x) + (a * x * x) + (b * x * x * x);
 }
 
 
