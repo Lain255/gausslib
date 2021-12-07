@@ -14,19 +14,19 @@ const float HALFPI = PI / 2;
 const float HALFPIINVERSE = 2 / PI;
 const float STEPLENGTH = (float) ((UPPER_BOUND - LOWER_BOUND)) / NUM_STEPS;
 
-float approxTan(float x)
+float aTanApprox(float x)
 {
     const float a = -0.087;
     const float b = -0.125;
     const float c = 0.278;
     const float l = 1.014;
 
-    if(x >= 1.0f) {
-        x = HALFPI - (x / (x * x + a));
+    if(x > l) {
+        x = HALFPI - (x / (x * x + c));
     }
 
     else {
-        x = x + (b * x * x) + (c * x * x * x);
+        x = x + (a * x * x) + (b * x * x * x);
     }
 
     return x;
@@ -98,54 +98,6 @@ void generateVector(std::vector<float>& inputs, const long MIN, const long MAX, 
 
 int main()
 {
-<<<<<<< HEAD
-    clock_t t0;
-    clock_t t1;
-    clock_t dt;
-    float max;
-
-
-
-    max = 0;
-    t0 = clock();
-    for (int i = 0; i < NUMSTEPS; i++)
-    {
-        float y = atanf(LOWERBOUND + STEPLENGTH * i);
-        max = y > max ? y : max;
-    }
-    t1 = clock();
-    dt = t1 - t0;
-    printf("standard secs: %f\n", (float) dt / CLOCKS_PER_SEC);
-    printf("standard max: %f\n", max);
-
-
-
-    max = 0;
-    t0 = clock();
-    for (int i = 0; i < NUMSTEPS; i++)
-    {
-        float y = approxTan(LOWERBOUND + STEPLENGTH * i);
-        max = y > max ? y : max;
-    }
-    t1 = clock();
-    dt = t1 - t0;
-    printf("approx secs: %f\n", (float)dt / CLOCKS_PER_SEC);
-    printf("approx max: %f\n", max);
-
-
-    max = 0;
-    for (int i = 0; i < NUMSTEPS; i++)
-    {
-        float x = LOWERBOUND + STEPLENGTH *i;
-        float error = fabsf((atanf(x) - approxTan(x)) / atanf(x));
-        max = error > max ? error : max;
-    }
-
-    printf("max error: %f %%\n", max*100);
-
-    return 0;
-=======
-    BENCHMARK_FUNCTION(approxAtan, atanf);
+    BENCHMARK_FUNCTION(aTanApprox, atanf);
     BENCHMARK_FUNCTION(sinapprox, sinf);
->>>>>>> 6716fd5 (Add bench, update makefile)
 }
