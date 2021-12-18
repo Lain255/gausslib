@@ -32,6 +32,7 @@ float aTanApprox(float x)
     return x;
 }
 
+
 float sinapprox(float x)
 {
     const float a = 1.00274;
@@ -50,6 +51,27 @@ float sinapprox(float x)
 
     return i;
 }
+
+
+float cosapprox(float x)
+{
+    const float a = 1.00274;
+    const float b = -0.0294;
+    const float c = -0.1305;
+
+    int y = (int) (x / HALFPI);
+    x -= (float)y * HALFPI;
+    ++y %= 4;
+
+    if ((y & 1) == 1) { x = HALFPI - x; }
+
+    float i = (a * x) + (b * x * x) + (c * x * x * x);
+    
+    if((y & 2) == 2) { i = -i; }
+
+    return i;
+}
+
 
 void generateVector(std::vector<float>& inputs, const long MIN, const long MAX, const long STEPS) {
     for (long i = 0; i < STEPS; i += 1) {
@@ -100,4 +122,5 @@ int main()
 {
     BENCHMARK_FUNCTION(aTanApprox, atanf);
     BENCHMARK_FUNCTION(sinapprox, sinf);
+    BENCHMARK_FUNCTION(cosapprox, cosf);
 }
