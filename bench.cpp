@@ -5,7 +5,7 @@
 #include <vector>
 #include <chrono>
 
-#define LOWER_BOUND 0
+#define LOWER_BOUND -1000
 #define UPPER_BOUND 1000
 #define NUM_STEPS 10000000
 #define PI 3.14159265359
@@ -21,15 +21,17 @@ float aTanApprox(float x)
     const float c = 0.278;
     const float l = 1.014;
 
+    int sign = signbit(x) ? -1 : 1;
+    x = fabs(x);
+
     if(x > l) {
         x = HALFPI - (x / (x * x + c));
     }
-
     else {
         x = x + (a * x * x) + (b * x * x * x);
     }
 
-    return x;
+    return sign * x;
 }
 
 
@@ -39,7 +41,7 @@ float sinapprox(float x)
     const float b = -0.0294;
     const float c = -0.1305;
 
-    int y = (int) (x / HALFPI);
+    int y = (int) (x / HALFPI) - (x < 0);
     x -= (float)y * HALFPI;
     y %= 4;
 
@@ -59,7 +61,7 @@ float cosapprox(float x)
     const float b = -0.0294;
     const float c = -0.1305;
 
-    int y = (int) (x / HALFPI);
+    int y = (int) (x / HALFPI) - (x < 0);
     x -= (float)y * HALFPI;
     ++y %= 4;
 
@@ -72,11 +74,21 @@ float cosapprox(float x)
     return i;
 }
 
+float sqrtapprox(float x)
+{
+    float y = x < 0.0001 ? 200 * x : 0.01 * x + 0.16;
+    y = 0.5*(y + x/y); 
+    y = 0.5*(y + x/y); 
+    y = 0.5*(y + x/y); 
+    y = 0.5*(y + x/y); 
+    y = 0.5*(y + x/y); 
+
+    return y;
+}
 
 void generateVector(std::vector<float>& inputs, const long MIN, const long MAX, const long STEPS) {
     for (long i = 0; i < STEPS; i += 1) {
-        // Sean: this is incorrect if MIN < 0000
-        float x = ((float)(MAX - MIN) / (float)STEPS) * (float)i;
+        float x = MIN + ((float)(MAX - MIN) / (float)STEPS) * (float)i;
         inputs.push_back(x);
     }
 }
@@ -123,4 +135,6 @@ int main()
     BENCHMARK_FUNCTION(aTanApprox, atanf);
     BENCHMARK_FUNCTION(sinapprox, sinf);
     BENCHMARK_FUNCTION(cosapprox, cosf);
+    BENCHMARK_FUNCTION(sqrtapprox, sqrtf);
+
 }
